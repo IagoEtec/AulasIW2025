@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário Interativo</title>
+
+    <!-- Fonte cursiva -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        /* Fundo da página */
+        body {
+            background-image: url('wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: gold;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container com borda brilhante */
+        .container {
+            background-color: #1e1e1e;
+            padding: 40px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            text-align: center;
+            animation: aparecer 1.5s ease;
+        }
+
+        /* Efeito de brilho (estrelas) na borda */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 18px;
+            background: linear-gradient(45deg, gold, transparent, gold, transparent, gold);
+            background-size: 400% 400%;
+            animation: brilhoEstrelas 5s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes brilhoEstrelas {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Título */
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 48px;
+            color: gold;
+            margin-bottom: 30px;
+            animation: deslizardeCima 1s ease;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
+            animation: aparecer 1.5s ease;
+        }
+
+        /* Campos de texto */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid gold;
+            border-radius: 8px;
+            background-color: transparent;
+            color: gold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: aparecer 1.5s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px gold;
+        }
+
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset !important;
+            -webkit-text-fill-color: gold !important;
+        }
+
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset !important;
+            -webkit-text-fill-color: gold !important;
+        }
+
+        /* Botão */
+        button {
+            background-color: gold;
+            color: #121212;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: deslizardeBaixo 1s ease;
+        }
+
+        button:hover {
+            background-color: #e6c200;
+            transform: scale(1.05);
+        }
+
+        /* Mensagem */
+        #mensagem {
+            margin-top: 20px;
+            color: gold;
+            font-size: 18px;
+            min-height: 24px;
+            animation: aparecer 1.5s ease;
+        }
+
+        /* Animações */
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes deslizardeCima {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes deslizardeBaixo {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Formulário Interativo</h1>
+
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" onkeyup="contarCaracteres()">
+
+        <label for="email">E-mail:</label>
+        <input type="text" id="email" onblur="verificarEmail()">
+
+        <button id="botaoEnviar" onclick="enviarDados()">Enviar</button>
+
+        <p id="mensagem"></p>
+    </div>
+
+    <script>
+        console.log("Area VIP: ");
+
+        function contarCaracteres() {
+            var nome = document.getElementById('nome').value;
+            console.log("Quantidade de caracteres: " + nome.length);
+        }
+
+        function verificarEmail() {
+            var email = document.getElementById('email').value;
+            if (email === '') {
+                document.getElementById('mensagem').innerText = 'Por favor, preencha o e-mail';
+            }
+        }
+
+        function enviarDados() {
+            var nome = document.getElementById('nome').value;
+            var email = document.getElementById('email').value;
+
+            if (nome === '' && email === '') {
+                document.getElementById('mensagem').innerText =
+                    'Erro: Preencha o nome e o e-mail antes de enviar.';
+            } else if (nome === '') {
+                document.getElementById('mensagem').innerText =
+                    'Erro: Por favor, preencha o nome.';
+            } else if (email === '') {
+                document.getElementById('mensagem').innerText =
+                    'Erro: Por favor, preencha o e-mail.';
+            } else {
+                document.getElementById('mensagem').innerText =
+                    'Obrigado, ' + nome + '! Seus dados foram enviados com sucesso.';
+            }
+        }
+    </script>
+</body>
+
+</html>
+ 
